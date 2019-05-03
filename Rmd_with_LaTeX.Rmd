@@ -1,0 +1,141 @@
+---
+title: "R Markdown with LaTeX"
+author: "Rob Donald"
+date: "`r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  pdf_document:
+    fig_caption: yes
+    toc: yes
+    toc_depth: '2'
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# The fig.pos = 'h' tells LaTeX to put the figure where you ask for it
+knitr::opts_chunk$set(echo = TRUE,fig.height=8,fig.width=12,fig.pos = 'h')
+options(width=1500)
+```
+
+```{r library_setup, include=FALSE}
+suppressMessages({suppressWarnings({
+    library(dplyr)
+    library(readr)
+    library(lubridate)
+    
+    library(ggplot2)
+    library(RobsRUtils)
+    library(pander)
+
+})})
+```
+
+```{r echo=FALSE}
+theme.report <- theme_bw() + theme(plot.title = element_text(colour="black"
+                                      ,size=24
+                                      ,angle=0
+                                      ,hjust=0.5,vjust=1.0
+                                      ,face="plain")
+            ,axis.text.x = element_text(colour="black"
+                                      ,size=18
+                                      ,angle=0
+                                      ,hjust=0.5,vjust=0.6
+                                      ,face="plain")
+            ,axis.text.y = element_text(colour="black"
+                                      ,size=12
+                                      ,angle=0
+                                      ,hjust=0.0,vjust=0.6
+                                      ,face="plain")
+            ,axis.title = element_text(colour="black"
+                                      ,size=18
+                                      ,angle=0
+                                      ,hjust=0.5,vjust=0.6
+                                      ,face="plain")
+            )
+```
+# Introduction
+
+This set of notes shows some examples of using \LaTeX\ with R markdown.
+
+The idea is to give examples which help if you are reasonably comfortable
+with R markdown but want *some* of the customisation of using LaTeX without
+having to become a LaTeX guru \footnote{Although if you do get proficient
+in this stuff you may well get the guru title}.
+
+# What is \LaTeX?
+
+Well if you have been 'Knit'ing to PDF inside RStudio you have been using 
+LaTeX all the time. You may have already used things like \\newpage to 
+tidy up a document. The \\newpage is actually a LaTeX command which is being
+detected by Knitr as it processes the document.
+
+LaTeX is used extensively in academia particularly in any subject that requires
+a lot of maths notation. It is a different way of thinking about documents. You 
+write your document in plain text and the various commands then format the 
+document into something that looks nice. It means you can produce a PDF document
+with formulas and figures and tables without ever going near Word. But it is
+not for everyone. If you need a WYSIWYG editor then this is not for you.
+
+In the past you would need to use a LaTeX editor of some kind (e.g. the cross platform open source program [TeXMaker](http://www.xm1math.net/texmaker/)). With the advent of RStudio and 
+R Markdown (*which I assume you are at least partly familiar with*) you can now
+write well formatted PDF documents with very little knowledge of LaTeX. 
+
+This set of notes will show you how you can extend your documents by using
+a small amount of LaTeX code in the text portion of your .Rmd R markdown 
+document. 
+
+NOTE: if you go down this route you can't flip back to HTML output. The Knitr
+package will get a bit upset and probably miss out some of the LaTeX commands. It will look like it has worked, there will just be missing bits (give it a try ...)
+
+## Some History
+
+LaTeX is actually a typesetting programming language and was developed
+by Leslie Lamport in 1983. See this link for a more detailed
+description [LaTeX History](https://en.wikipedia.org/wiki/LaTeX#History).
+
+It is a layer of code over the top of the typesetting language \TeX which
+was developed by the famous computer scientist Donald Knuth in 1978. See
+this link for more details [Tex History](https://en.wikipedia.org/wiki/TeX)
+
+# Useful YouTube links
+
++ [LaTeX Tutorial 1 - Creating a LaTeX Document](https://www.youtube.com/watch?v=SoDv0qhyysQ)
+
+# Font Sizes
+
+\begin{large}
+Some large text
+\end{large}
+
+\begin{normalsize}
+Some normalsize text
+\end{normalsize}
+
+Compare this default R markdown line to the above 'normalsize' text.
+
+\begin{small}
+Some small text which runs over several 
+lines of text and allows us to put in more information
+in a smaller space. Which can be useful if the information
+is very dense.
+\end{small}
+
+\begin{footnotesize}
+This is footnotesize. Useful size for tables and other hard to fit in things.
+\end{footnotesize}
+
+\newpage
+# References
+\begin{footnotesize}
+\begin{center}Footnote Size Links\end{center}
+\begin{itemize}
+\item{[1] \url{https://www.stata.com/manuals13/pss.pdf} \tiny{(Accessed 2019-05-02)}}
+\item{[2] \url{https://en.wikipedia.org/wiki/Sample_size_determination} \tiny{(Accessed 2019-05-03)}}
+\item{[3] \url{https://en.wikipedia.org/wiki/Power_(statistics)} \tiny{(Accessed 2019-05-03)}}
+\item{[4] \url{https://en.wikipedia.org/wiki/Effect_size} \tiny{(Accessed 2019-05-03)}}
+\item{[5] \url{https://en.wikipedia.org/wiki/Test_statistic} \tiny{(Accessed 2019-05-03)}}
+
+\item{[6] \url{https://blog.minitab.com/blog/adventures-in-statistics-2/understanding-analysis-of-variance-anova-and-the-f-test} \tiny{(Accessed 2019-05-03)}}
+\end{itemize}
+\end{footnotesize}
+
+
