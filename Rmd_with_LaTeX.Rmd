@@ -21,6 +21,7 @@ suppressMessages({suppressWarnings({
     library(dplyr)
     library(readr)
     library(lubridate)
+    library(here)
     
     library(ggplot2)
     library(RobsRUtils)
@@ -59,7 +60,8 @@ This set of notes shows some examples of using \LaTeX\ with R markdown.
 The idea is to give examples which help if you are reasonably comfortable
 with R markdown but want *some* of the customisation of using LaTeX without
 having to become a LaTeX guru \footnote{Although if you do get proficient
-in this stuff you may well get the guru title}.
+in this stuff you may well get the guru title}. The code that generates the 
+.pdf output is in the .Rmd file in this repo.
 
 # What is \LaTeX?
 
@@ -70,7 +72,7 @@ detected by Knitr as it processes the document.
 
 LaTeX is used extensively in academia particularly in any subject that requires
 a lot of maths notation. It is a different way of thinking about documents. You 
-write your document in plain text and the various commands then format the 
+write your document in plain text and add in the various commands that format the 
 document into something that looks nice. It means you can produce a PDF document
 with formulas and figures and tables without ever going near Word. But it is
 not for everyone. If you need a WYSIWYG editor then this is not for you.
@@ -100,7 +102,14 @@ this link for more details [Tex History](https://en.wikipedia.org/wiki/TeX)
 
 + [LaTeX Tutorial 1 - Creating a LaTeX Document](https://www.youtube.com/watch?v=SoDv0qhyysQ)
 
+The above link is the start of a very useful series of videos
+by Michelle Krummel.
+
 # Font Sizes
+
+\begin{Large}
+Some Large (with a capital 'L') text
+\end{Large}
 
 \begin{large}
 Some large text
@@ -123,8 +132,124 @@ is very dense.
 This is footnotesize. Useful size for tables and other hard to fit in things.
 \end{footnotesize}
 
+# Size and Position of Figures
+
+This can be really awkward as \LaTeX\ often thinks *it* knows best. 
+
+The web is full of stuff that doesn't work for output to .pdf documents. 
+Here are some commands to try for controlling the position and size of figures.
+
+## Size Using out.width and out.height
+
+The technique I use all the time is to import the picture into the document
+with an R chunk. Inside the R chunk you use:
+
++ knitr::include_graphics()
+
+You add options to the chunk header.
+
+```{}
+{r, out.width='18cm',out.height='12cm'}
+```
+
+This gives:
+
+```{r, out.width='18cm',out.height='12cm'}
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+```
+
+The 18 cm seems to work for an A4 page which is 21 cm wide. You can adjust
+the height to suit your image.
+
+Let's half the size.
+
+```{}
+{r, out.width='9cm',out.height='6cm'}
+```
+
+This gives:
+
+```{r, out.width='9cm',out.height='6cm'}
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+```
+
 \newpage
+## Centre the Image
+
+Now we can try to centre the image. The next two attempts *__don't__* work
+for me despite lots of the internet telling you they will.
+
+\begin{center}
+
+```{r, out.width='9cm',out.height='6cm'}
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+```
+
+\end{center}
+
+Directly in the text part of the R markdown.
+
+\begin{center}
+\include_graphics('images/GitWorkflow.png')
+\end{center}
+
+This doesn't even produce the plot!
+
+## Using fig.align="center"
+
+This technique *does* work. Add this into the chunk header.
+
+```{}
+{r, out.width='9cm',out.height='6cm',fig.align="center"}
+```
+
+This gives:
+
+```{r, out.width='9cm',out.height='6cm',fig.align="center"}
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+```
+
+\newpage
+
+---
+
+*Here is a link to a constantly referenced article on the web about this stuff.
+Note that it is biased towards HTML output*
+[ZevRoss Article](https://www.zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/#use-dpi-to-change-the-resolution-of-images-and-figures)
+
+---
+
+So let's add a 'Large' title and caption
+
+\begin{Large}
+\begin{center}
+Git Workflow
+\end{center}
+\end{Large}
+
+```{r echo=FALSE, fig.align="center", out.height='8cm', out.width='12cm'}
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+```
+
+Figure1: The above diagram shows a typical Git workflow using
+a cloud based Git provider (e.g. Bitbucket or Github) as the central
+repositry for the team's work.
+
+# Centred Text
+
+\begin{center}
+Some centred text on a line
+\end{center}
+
 # References
+
+This is an example of creating a references page.
+
 \begin{footnotesize}
 \begin{center}Footnote Size Links\end{center}
 \begin{itemize}
