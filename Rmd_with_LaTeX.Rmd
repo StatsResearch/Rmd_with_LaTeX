@@ -63,7 +63,7 @@ having to become a LaTeX guru \footnote{Although if you do get proficient
 in this stuff you may well get the guru title}. The code that generates the 
 .pdf output is in the .Rmd file in this repo.
 
-# What is \LaTeX?
+# What is \LaTeX? {#Sec_WhatIsLaTex}
 
 Well if you have been 'Knit'ing to PDF inside RStudio you have been using 
 LaTeX all the time. You may have already used things like \\newpage to 
@@ -88,7 +88,7 @@ document.
 NOTE: if you go down this route you can't flip back to HTML output. The Knitr
 package will get a bit upset and probably miss out some of the LaTeX commands. It will look like it has worked, there will just be missing bits (give it a try ...)
 
-## Some History
+## Some History {#SubSec_LatexHistory}
 
 LaTeX is actually a typesetting programming language and was developed
 by Leslie Lamport in 1983. See this link for a more detailed
@@ -274,6 +274,61 @@ X &\sim {\sf Norm}(10, 3) \\
 \end{align*}
 
 
+
+# Internal Section Links
+
+This is how to reference an internal section
+
+From this link (answered May 19 '14 at 9:11 by hoijui:)
+
+https://stackoverflow.com/questions/2822089/how-to-link-to-part-of-the-same-document-in-markdown
+
+1. Create the anchor
+2. Reference the anchor
+
+* Create the anchor
+
+You do this by adding a link name in curly brackets to the header you will be referencing.
+
+```{r}
+# My Useful Section {#Sec_MyUsefulBit}
+```
+
+
+* Reference the anchor
+
+Somewhere in your *body text* use the normal syntax for a link 
+
+```{}
+[link name](link)
+```
+
+so for example 
+
+```{}
+
+See the section on [What is LaTex](#Sec_WhatIsLaTex)
+
+```
+
+See the section on [What is LaTex](#Sec_WhatIsLaTex)
+
+This also works for sub sections, i.e. H2 headers
+
+Here is the markdown:
+
+```{}
+See this paragraph [History of LaTex](#SubSec_LatexHistory) for more details.
+```
+
+which will give this output in your document.
+
+See this paragraph [History of LaTex](#SubSec_LatexHistory) for more details.
+
+
+
+
+\newpage
 # References
 
 This is an example of creating a references page.
