@@ -246,6 +246,34 @@ repositry for the team's work.
 Some centred text on a line
 \end{center}
 
+\newpage
+# Maths and Greek Symbols
+
+This link, https://rpruim.github.io/s341/S19/from-class/MathinRmd.html, gives a 
+good overview of getting standard maths notation into your R markdown document.
+
+Here is an example:
+
+```{}
+
+\begin{align*}
+a & = b \\
+X &\sim {\sf Norm}(10, 3) \\
+5 & \le 10
+\end{align*}
+
+
+```
+
+which will produce this text:
+
+\begin{align*}
+a & = b \\
+X &\sim {\sf Norm}(10, 3) \\
+5 & \le 10
+\end{align*}
+
+
 # References
 
 This is an example of creating a references page.
