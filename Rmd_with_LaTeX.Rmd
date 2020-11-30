@@ -249,9 +249,46 @@ knitr::include_graphics(path = image.path)
 
 Figure1: The above diagram shows a typical Git workflow using
 a cloud based Git provider (e.g. Bitbucket or Github) as the central
-repositry for the team's work.
+repository for the team's work.
+
+\newpage
+## Multiple figures
+
+I came across this link https://bookdown.org/yihui/rmarkdown-cookbook/figures-side.html
+which shows a technique for putting figures side by side. It works!
+
+```{}
+{r, figures-side, fig.show="hold", out.width="50%"}
+par(mar = c(4, 4, .1, .1))
+plot(cars)
+plot(mpg ~ hp, data = mtcars, pch = 19)
+
+```
+
+Using our .png images like this:
+
+```{r, figures-side,fig.show="hold", out.width="50%"}
+par(mar = c(4, 4, .1, .1))
+
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+
+image.path <- here('images','GitWorkflow_2.png')
+knitr::include_graphics(path = image.path)
+```
+
+Be warned that this seems quite fragile and I was able to easily break it by using dissimilar
+image sizes or trying to add a caption with fig.cap="abc".
 
 # Centred Text
+
+```{}
+\begin{center}
+Some centred text on a line
+\end{center}
+```
+
+Gives this:
 
 \begin{center}
 Some centred text on a line
