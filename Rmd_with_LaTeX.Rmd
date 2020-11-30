@@ -170,10 +170,21 @@ Let's half the size.
 
 This gives:
 
-```{r, out.width='9cm',out.height='6cm'}
+```{r, out.width='12cm',out.height='6cm'}
 image.path <- here('images','GitWorkflow.png')
 knitr::include_graphics(path = image.path)
 ```
+
+### Sometimes even this doesn't work
+The problem with the above is that sometimes even this doesn't work and it 
+can be *very* frustrating. The out.width and out.height options are just ignored. My best guess
+at this is that the original image size is to big *or* too small for the resizing
+to work. This is hinted at in this web post https://github.com/yihui/knitr/issues/1477.
+
+The way I fix this is usually to resize the image to something that looks about right on an 
+A4 page on my Macbook screen and then screen grab it using the Mac's Cmd-Shift-4 sequence. I have 
+this set to capture as .pdf but the default is .png. This seems to give me something that will
+resize most of the time. Tedious eh (best Canadian accent).
 
 \newpage
 ## Centre the Image
