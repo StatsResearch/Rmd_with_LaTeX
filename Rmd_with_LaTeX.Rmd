@@ -175,6 +175,17 @@ image.path <- here('images','GitWorkflow.png')
 knitr::include_graphics(path = image.path)
 ```
 
+### Sometimes even this doesn't work
+The problem with the above is that sometimes even this doesn't work and it 
+can be *very* frustrating. The out.width and out.height options are just ignored. My best guess
+at this is that the original image size is to big *or* too small for the resizing
+to work. This is hinted at in this web post https://github.com/yihui/knitr/issues/1477.
+
+The way I fix this is usually to resize the image to something that looks about right on an 
+A4 page on my Macbook screen and then screen grab it using the Mac's Cmd-Shift-4 sequence. I have 
+this set to capture as .pdf but the default is .png. This seems to give me something that will
+resize most of the time. Tedious eh (best Canadian accent).
+
 \newpage
 ## Centre the Image
 
@@ -192,9 +203,11 @@ knitr::include_graphics(path = image.path)
 
 Directly in the text part of the R markdown.
 
+```{}
 \begin{center}
 \include_graphics('images/GitWorkflow.png')
 \end{center}
+```
 
 This doesn't even produce the plot!
 
@@ -238,9 +251,46 @@ knitr::include_graphics(path = image.path)
 
 Figure1: The above diagram shows a typical Git workflow using
 a cloud based Git provider (e.g. Bitbucket or Github) as the central
-repositry for the team's work.
+repository for the team's work.
+
+\newpage
+## Multiple figures
+
+I came across this link https://bookdown.org/yihui/rmarkdown-cookbook/figures-side.html
+which shows a technique for putting figures side by side. It works!
+
+```{}
+{r, figures-side, fig.show="hold", out.width="50%"}
+par(mar = c(4, 4, .1, .1))
+plot(cars)
+plot(mpg ~ hp, data = mtcars, pch = 19)
+
+```
+
+Using our .png images like this:
+
+```{r, figures-side,fig.show="hold", out.width="50%"}
+par(mar = c(4, 4, .1, .1))
+
+image.path <- here('images','GitWorkflow.png')
+knitr::include_graphics(path = image.path)
+
+image.path <- here('images','GitWorkflow_2.png')
+knitr::include_graphics(path = image.path)
+```
+
+Be warned that this seems quite fragile and I was able to easily break it by using dissimilar
+image sizes or trying to add a caption with fig.cap="abc".
 
 # Centred Text
+
+```{}
+\begin{center}
+Some centred text on a line
+\end{center}
+```
+
+Gives this:
 
 \begin{center}
 Some centred text on a line
@@ -325,7 +375,17 @@ which will give this output in your document.
 
 See this paragraph [History of LaTex](#SubSec_LatexHistory) for more details.
 
+# Slide Presentations
 
+## Beamer
+
+https://rmarkdown.rstudio.com/articles_beamer.html
+
+Also see my R project ```KidsBIT_DataPrep```, file ```KidsBIT_ProgressOverview_April_2021.Rmd```
+
+## xaringan
+
+https://emitanaka.org/slides/rladiesSSA2020
 
 
 \newpage
