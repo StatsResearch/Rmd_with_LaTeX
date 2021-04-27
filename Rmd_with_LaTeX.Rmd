@@ -375,6 +375,46 @@ which will give this output in your document.
 
 See this paragraph [History of LaTex](#SubSec_LatexHistory) for more details.
 
+# Rotating Pages
+
+Make sure the .Rmd YAML header has this in it:
+
+```{}
+header-includes:
+      - \usepackage{pdflscape}
+```
+
+Then before a chunk something like this:
+
+```{}
+\newpage
+\begin{landscape}
+```
+
+With a chunk specification like:
+```{}
+{r echo=FALSE, fig.align='center'}
+
+titleStr <- 'Percent Marked Monitoring Time (Filtered Data)'
+subtitleStr <- 'Kids BIT'
+
+p <- Generate_Marking_PC_MonTime(plot_mpcmt_filtered
+                                 ,titleStr = titleStr
+                                 ,subtitleStr = subtitleStr)
+
+print(p)
+```
+
+Followed by a closing section after the chunk:
+
+```{}
+\end{landscape}
+```
+
+NOTE: the ```fig.align='center'``` is critical and some web references say that
+this does not work with ```knitr::include_graphics()```, although I have not confirmed that.
+
+
 # Slide Presentations
 
 ## Beamer
