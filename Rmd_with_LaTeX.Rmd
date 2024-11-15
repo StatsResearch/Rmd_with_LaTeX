@@ -3,10 +3,10 @@ title: "R Markdown with LaTeX"
 author: "Rob Donald"
 date: "`r format(Sys.time(), '%A %d %B %Y')`"
 output:
-  pdf_document:
-    fig_caption: yes
-    toc: yes
-    toc_depth: '2'
+  pdf_document: 
+    fig_caption: true
+    toc: true
+    toc_depth: 2
 urlcolor: blue
 ---
 
@@ -192,14 +192,24 @@ resize most of the time. Tedious eh (best Canadian accent).
 Now we can try to centre the image. The next two attempts *__don't__* work
 for me despite lots of the internet telling you they will.
 
-\begin{center}
+<!-- MAJOR MAJOR PAIN -->
+<!-- \begin{center} -->
 
 ```{r, out.width='9cm',out.height='6cm'}
 image.path <- here('images','GitWorkflow.png')
 knitr::include_graphics(path = image.path)
 ```
 
-\end{center}
+<!-- \end{center} -->
+
+<!-- NOTE the four backticks to get this to render correctly -->
+
+
+I had to update my TexLive installation on 2024-11-11
+This seems to have caused a major screw up using the following code, i.e. 
+knitr::include_graphics(path = image.path) within "\\begin{center}\\end{center}"
+causing 'Knit' to fail completely.
+
 
 Directly in the text part of the R markdown.
 
@@ -323,6 +333,33 @@ X &\sim {\sf Norm}(10, 3) \\
 5 & \le 10
 \end{align*}
 
+# Quarto Equation Numbering
+
+This is really quite unpleasant.
+
+* \url{https://github.com/quarto-dev/quarto-cli/issues/2275}
+
+```{}
+<!-- even though we are using {flalign} we still need to use a & single line or &\\ multiple line to force -->
+<!-- the left justification -->
+<!-- See these links -->
+<!-- https://github.com/quarto-dev/quarto-cli/issues/2275 -->
+<!-- https://quarto.org/docs/authoring/cross-references.html#equations -->
+
+<!-- Equation numbering: -->
+<!-- The key is this line \numberwithin{equation}{subsection} in the  -->
+<!-- include-in-header: top yaml bit -->
+```
+
+
+```{}
+        include-in-header: 
+            text: \addtokomafont{disposition}{\rmfamily}
+                  \usepackage{amsmath} 
+                  \numberwithin{equation}{section} #{section|subsection}
+                  \usepackage{xurl}
+                  \usepackage{typearea}
+```
 
 
 # Internal Section Links
